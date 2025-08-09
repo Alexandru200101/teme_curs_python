@@ -30,6 +30,7 @@ else:
     employee[alegere_id]['salary'] = nou_salariu
     print(f"Salariul pentru {angajat['name']} a fost actualizat la {nou_salariu}.")
 print(employee)
+print("\n*** Salariile actualizate pentru toți angajații ***")
 
 
 
