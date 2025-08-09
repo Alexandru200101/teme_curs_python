@@ -16,6 +16,7 @@ for elem in numbers:
         aparitii[elem] = 1   # prima apariție
 
 print(aparitii)
+print("Numărul de elemente:", len(numbers))
 print("Numărul de elemente unice:", len(aparitii))
 
 # aparitii = {elem: numbers.count(elem) for elem in set(numbers)}
