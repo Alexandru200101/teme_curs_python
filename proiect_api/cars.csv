@@ -1,0 +1,11 @@
+id,brand,model,year,engine,hp,fuel,consumption,price,rent,rented,rent_count
+a1b2c3d4-e5f6-7890-abcd-ef1234567890,Porsche,911 Carrera,2025,3.0L twin-turbo flat-6,379,Benzina,18/25 mpg,132300,2000,no,0
+a2b3c4d5-e6f7-8901-bcde-f12345678901,Porsche,911 Carrera S,2024,3.0L twin-turbo flat-6,443,Benzina,18/24 mpg,172960,2500,no,0
+b1c2d3e4-f5g6-7890-cdef-123456789012,Porsche,911 Carrera T,2025,3.0L twin-turbo flat-6,388,Benzina,18/25 mpg,143700,2200,no,0
+c2d3e4f5-g6h7-8901-defg-234567890123,Porsche,911 Carrera GTS,2024,3.0L twin-turbo flat-6,473,Benzina,17/23 mpg,201505,3000,no,0
+d3e4f5g6-h7i8-9012-efgh-345678901234,Porsche,911 Turbo S,2024,3.8L twin-turbo flat-6,640,Benzina,15/20 mpg,207000,3200,no,0
+e4f5g6h7-i8j9-0123-fghi-456789012345,Porsche,911 GT3,2025,4.0L aspirat natural flat-6,502,Benzina,15/21 mpg,180000,2800,no,0
+f5g6h7i8-j9k0-1234-ghij-567890123456,Porsche,911 Targa 4,2024,3.0L twin-turbo flat-6,379,Benzina,18/25 mpg,126400,1900,no,0
+g6h7i8j9-k0l1-2345-hijk-678901234567,Porsche,911 Targa 4S,2024,3.0L twin-turbo flat-6,443,Benzina,18/24 mpg,156600,2300,no,0
+h7i8j9k0-l1m2-3456-ijkl-789012345678,Porsche,911 Turbo,2024,3.8L twin-turbo flat-6,572,Benzina,15/20 mpg,172000,2700,no,1
+i8j9k0l1-m2n3-4567-jklm-890123456789,Porsche,911 GT3 RS,2025,4.0L aspirat natural flat-6,518,Benzina,14/20 mpg,220000,3500,no,1
