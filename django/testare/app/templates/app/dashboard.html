@@ -1,0 +1,127 @@
+<!-- Dashboard Admin -->
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - DecorSoft2000</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+      :root {
+        --blue: #1d4ed8;
+        --dark-blue: #1e40af;
+        --gray-light: #f9fafb;
+        --gray: #6b7280;
+        --white: #ffffff;
+        --accent: #6366f1;
+        --shadow: rgba(0, 0, 0, 0.1);
+      }
+      * { margin:0; padding:0; box-sizing:border-box; }
+      body {
+        font-family: 'Inter', sans-serif;
+        background: var(--gray-light);
+        color: var(--gray);
+      }
+      header {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background: var(--white);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 40px;
+        box-shadow: 0 2px 8px var(--shadow);
+        z-index: 1000;
+      }
+      .logo { font-size:1.5rem; font-weight:700; color: var(--blue); }
+      nav { display:flex; gap:30px; }
+      nav a {
+        font-weight:500;
+        color: var(--gray);
+        transition: color .3s;
+      }
+      nav a:hover { color: var(--accent); }
+      main {
+        padding: 100px 40px 40px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .welcome {
+        background: var(--white);
+        padding: 40px;
+        border-radius: 8px;
+        box-shadow: 0 4px 20px var(--shadow);
+        animation: fadeInUp .8s ease-out;
+      }
+      .welcome h2 { color: var(--dark-blue); margin-bottom: 15px; }
+      .welcome p { font-size:1rem; line-height:1.6; }
+      .dashboard-nav {
+        display: flex;
+        justify-content: center;
+        gap: 40px;
+        margin: 40px 0;
+        flex-wrap: wrap;
+      }
+      .dashboard-nav a {
+        background: var(--white);
+        padding: 15px 30px;
+        border-radius: 5px;
+        box-shadow: 0 4px 15px var(--shadow);
+        color: var(--blue);
+        font-weight: 600;
+        transition: transform .3s, background .3s;
+      }
+      .dashboard-nav a:hover {
+        background: var(--accent);
+        color: var(--white);
+        transform: translateY(-3px);
+      }
+      footer {
+        background: var(--dark-blue);
+        color: var(--white);
+        text-align: center;
+        padding: 20px;
+        margin-top: 40px;
+      }
+      @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+      @media(max-width:768px) {
+        nav { gap:15px; }
+        .dashboard-nav { gap:20px; }
+      }
+    </style>
+</head>
+<body>
+  <header>
+    <div class="logo">DecorSoft2000</div>
+    <nav>
+      <a href="#">Bilanț</a>
+      <a href="#">Operațiuni</a>
+      <a href="#">Gestiuni</a>
+      <a href="{% url 'logout' %}">Logout</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="welcome">
+      <h2>Bun venit, {{ request.user.username }}!</h2>
+      <p>Selectează una dintre secțiuni pentru a începe gestionarea contabilității firmei tale:</p>
+    </div>
+
+    <div class="dashboard-nav">
+      <a href="#">Bilanț</a>
+      <a href="#">Operațiuni</a>
+      <a href="#">Gestiuni</a>
+    </div>
+  </main>
+
+  <footer>
+    &copy; 2025 DecorSoft2000. Toate drepturile rezervate.
+  </footer>
+</body>
+</html>
+
+

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Autentificare Firmă</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {--accent:#6366f1;--error:#ef4444;--light-gray:#f5f7fa;--shadow:rgba(0,0,0,0.1);}
+    *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;}
+    body{background:var(--light-gray);display:flex;justify-content:center;align-items:center;height:100vh;}
+    .login-box{background:#fff;padding:40px 30px;border-radius:12px;box-shadow:0 8px 30px var(--shadow);width:100%;max-width:380px;text-align:center;}
+    .login-box h2{font-size:1.75rem;color:#1e40af;margin-bottom:24px;font-weight:600;}
+    .login-box .error{background:var(--error);color:#fff;padding:10px;border-radius:6px;margin-bottom:16px;}
+    .login-box input{width:100%;padding:12px;margin:8px 0;border:1px solid #ccc;border-radius:6px;}
+    .login-box button{width:100%;padding:12px;background:var(--accent);color:#fff;border:none;border-radius:6px;font-weight:600;cursor:pointer;transition:background .3s;}
+    .login-box button:hover{background:#4f46e5;}
+  </style>
+</head>
+<body>
+  <div class="login-box">
+    <h2>Autentificare Firmă</h2>
+    {% if error %}
+      <div class="error">{{ error }}</div>
+    {% endif %}
+    <form method="POST" action="{% url 'login_firma' %}">
+      {% csrf_token %}
+      <input type="text" name="username" placeholder="Utilizator" required autofocus />
+      <input type="password" name="password" placeholder="Parolă" required />
+      <button type="submit">Autentificare</button>
+    </form>
+  </div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+           
+
+           
+
+

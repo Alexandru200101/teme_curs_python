@@ -1,0 +1,7 @@
+signup:1. user:alex01
+        parola:parolanoua
+
+superuser:alex
+noua_parola123
+
+

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Înregistrare Firmă</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {--accent:#6366f1;--error:#ef4444;--light-gray:#f5f7fa;--shadow:rgba(0,0,0,0.1);}
+    *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;}
+    body{background:var(--light-gray);display:flex;justify-content:center;align-items:center;height:100vh;}
+    .signup-box{background:#fff;padding:40px;border-radius:10px;box-shadow:0 8px 30px var(--shadow);width:100%;max-width:400px;}
+    .signup-box h2{text-align:center;color:var(--accent);margin-bottom:24px;font-size:1.75rem;font-weight:600;}
+    .signup-box .errorlist{list-style:none;margin-bottom:16px;}
+    .signup-box .errorlist li{color:var(--error);margin-bottom:4px;}
+    .signup-box input{width:100%;padding:12px;margin:8px 0;border:1px solid #ccc;border-radius:6px;}
+    .signup-box button{width:100%;padding:12px;background:var(--accent);color:#fff;border:none;border-radius:6px;font-weight:600;cursor:pointer;transition:background .3s;}
+    .signup-box button:hover{background:#4f46e5;}
+  </style>
+</head>
+<body>
+  <div class="signup-box">
+    <h2>Înregistrare Firmă</h2>
+    <form method="POST" novalidate>
+      {% csrf_token %}
+      {% if form.non_field_errors %}
+        <ul class="errorlist">
+          {% for err in form.non_field_errors %}<li>{{ err }}</li>{% endfor %}
+        </ul>
+      {% endif %}
+      {{ form.username.errors }}{{ form.username }}  
+      {{ form.email.errors }}{{ form.email }}  
+      {{ form.nume.errors }}{{ form.nume }}  
+      {{ form.password.errors }}{{ form.password }}  
+      <button type="submit">Înregistrează</button>
+    </form>
+  </div>
+</body>
+</html>
+
+
+
+
+
+

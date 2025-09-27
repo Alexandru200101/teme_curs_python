@@ -1,0 +1,26 @@
+[
+{
+  "model": "app.firma",
+  "pk": 1,
+  "fields": {
+    "username": "firma1",
+    "parola": "parola1"
+  }
+},
+{
+  "model": "app.firma",
+  "pk": 2,
+  "fields": {
+    "username": "firma2",
+    "parola": "parola2"
+  }
+},
+{
+  "model": "app.firma",
+  "pk": 3,
+  "fields": {
+    "username": "firma3",
+    "parola": "parola3"
+  }
+}
+]

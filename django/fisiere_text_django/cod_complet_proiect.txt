@@ -1,0 +1,794 @@
+adauga_operatiune.html:
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Adaugă Operațiune</title>
+  <style>
+    body{font-family:sans-serif;padding:2rem;background:#f5f7fa;}
+    .container{max-width:600px;margin:0 auto;background:#fff;padding:2rem;border-radius:8px;box-shadow:0 3px 6px rgba(0,0,0,0.1);}
+    label{font-weight:600;margin-top:1rem;display:block;}
+    input,textarea,select{width:100%;padding:0.5rem;margin-top:0.3rem;border:1px solid #ccc;border-radius:6px;}
+    button{margin-top:1.5rem;padding:0.7rem 1.5rem;background:#2563eb;color:#fff;border:none;border-radius:6px;cursor:pointer;}
+    button:hover{background:#1e40af;}
+    .errorlist{color:#dc2626;list-style:none;padding:0;}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Adaugă operațiune</h2>
+    <form method="post" novalidate>
+      {% csrf_token %}
+      {{ form.non_field_errors }}
+      <label for="{{ form.data.id_for_label }}">Data:</label>
+      {{ form.data }}{{ form.data.errors }}
+      <label for="{{ form.cont_debit.id_for_label }}">Cont Debit:</label>
+      {{ form.cont_debit }}{{ form.cont_debit.errors }}
+      <label for="{{ form.cont_credit.id_for_label }}">Cont Credit:</label>
+      {{ form.cont_credit }}{{ form.cont_credit.errors }}
+      <label for="{{ form.suma.id_for_label }}">Suma:</label>
+      {{ form.suma }}{{ form.suma.errors }}
+      <label for="{{ form.descriere.id_for_label }}">Descriere:</label>
+      {{ form.descriere }}{{ form.descriere.errors }}
+      <button type="submit">Salvează</button>
+    </form>
+  </div>
+</body>
+</html>
+
+
+
+
+
+
+
+dashboard_firma.html:
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport"content="width=device-width,initial-scale=1"/>
+  <title>Dashboard Firmă</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+</head>
+<body>
+  <nav class="navbar navbar-expand bg-primary text-white">
+    <div class="container-fluid">
+      <span class="navbar-brand mb-0 h1">Dashboard Firmă</span>
+      <div>
+        <a href="{% url 'lista_operatiuni' %}" class="btn btn-light btn-sm">Operațiuni</a>
+        <a href="{% url 'logout' %}" class="btn btn-light btn-sm">Logout</a>
+      </div>
+    </div>
+  </nav>
+  <div class="container text-center py-5">
+    <div class="card shadow-sm mx-auto" style="max-width:400px;">
+      <div class="card-body">
+        <h2 class="card-title text-primary">Bun venit, {{ request.user.username }}!</h2>
+        <p class="card-text">Aici poți gestiona datele firmei tale și accesa rapoarte.</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+
+
+
+
+
+dashboard_superuser.html:
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport"content="width=device-width,initial-scale=1"/>
+  <title>Dashboard Admin</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+</head>
+<body>
+  <nav class="navbar navbar-expand bg-dark text-white">
+    <div class="container-fluid">
+      <span class="navbar-brand mb-0 h1">Dashboard Admin</span>
+      <a href="{% url 'logout' %}" class="btn btn-light btn-sm">Logout</a>
+    </div>
+  </nav>
+  <div class="container py-5">
+    <h3>Bine ai venit, {{ request.user.username }}!</h3>
+    <h5 class="mt-4">Lista utilizatorilor:</h5>
+    <ul class="list-group mt-2">
+      {% for u in users %}
+        <li class="list-group-item">{{ u.username }} — {{ u.email }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+</body>
+</html>
+
+
+
+dashboard.html:
+<!-- Dashboard Admin -->
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - DecorSoft2000</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+      :root {
+        --blue: #1d4ed8;
+        --dark-blue: #1e40af;
+        --gray-light: #f9fafb;
+        --gray: #6b7280;
+        --white: #ffffff;
+        --accent: #6366f1;
+        --shadow: rgba(0, 0, 0, 0.1);
+      }
+      * { margin:0; padding:0; box-sizing:border-box; }
+      body {
+        font-family: 'Inter', sans-serif;
+        background: var(--gray-light);
+        color: var(--gray);
+      }
+      header {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background: var(--white);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 40px;
+        box-shadow: 0 2px 8px var(--shadow);
+        z-index: 1000;
+      }
+      .logo { font-size:1.5rem; font-weight:700; color: var(--blue); }
+      nav { display:flex; gap:30px; }
+      nav a {
+        font-weight:500;
+        color: var(--gray);
+        transition: color .3s;
+      }
+      nav a:hover { color: var(--accent); }
+      main {
+        padding: 100px 40px 40px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .welcome {
+        background: var(--white);
+        padding: 40px;
+        border-radius: 8px;
+        box-shadow: 0 4px 20px var(--shadow);
+        animation: fadeInUp .8s ease-out;
+      }
+      .welcome h2 { color: var(--dark-blue); margin-bottom: 15px; }
+      .welcome p { font-size:1rem; line-height:1.6; }
+      .dashboard-nav {
+        display: flex;
+        justify-content: center;
+        gap: 40px;
+        margin: 40px 0;
+        flex-wrap: wrap;
+      }
+      .dashboard-nav a {
+        background: var(--white);
+        padding: 15px 30px;
+        border-radius: 5px;
+        box-shadow: 0 4px 15px var(--shadow);
+        color: var(--blue);
+        font-weight: 600;
+        transition: transform .3s, background .3s;
+      }
+      .dashboard-nav a:hover {
+        background: var(--accent);
+        color: var(--white);
+        transform: translateY(-3px);
+      }
+      footer {
+        background: var(--dark-blue);
+        color: var(--white);
+        text-align: center;
+        padding: 20px;
+        margin-top: 40px;
+      }
+      @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+      @media(max-width:768px) {
+        nav { gap:15px; }
+        .dashboard-nav { gap:20px; }
+      }
+    </style>
+</head>
+<body>
+  <header>
+    <div class="logo">DecorSoft2000</div>
+    <nav>
+      <a href="#">Bilanț</a>
+      <a href="#">Operațiuni</a>
+      <a href="#">Gestiuni</a>
+      <a href="{% url 'logout' %}">Logout</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="welcome">
+      <h2>Bun venit, {{ request.user.username }}!</h2>
+      <p>Selectează una dintre secțiuni pentru a începe gestionarea contabilității firmei tale:</p>
+    </div>
+
+    <div class="dashboard-nav">
+      <a href="#">Bilanț</a>
+      <a href="#">Operațiuni</a>
+      <a href="#">Gestiuni</a>
+    </div>
+  </main>
+
+  <footer>
+    &copy; 2025 DecorSoft2000. Toate drepturile rezervate.
+  </footer>
+</body>
+</html>
+
+
+
+
+
+
+index.html:
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DecorSoft2000 - Aplicație Contabilitate</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root { --blue:#1d4ed8;--dark-blue:#1e40af;--light-gray:#f5f7fa;--gray:#6b7280;--white:#fff;--accent:#6366f1;--shadow:rgba(0,0,0,0.1); }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{font-family:'Inter',sans-serif;background:var(--light-gray);color:var(--gray);}
+    header{position:fixed;top:0;width:100%;background:var(--white);display:flex;justify-content:space-between;align-items:center;padding:20px 40px;box-shadow:0 2px 8px var(--shadow);z-index:1000;}
+    .logo{font-size:1.75rem;font-weight:700;color:var(--blue);}
+    nav{display:flex;gap:20px;}
+    nav a{font-weight:500;color:var(--gray);text-decoration:none;padding:8px 16px;border-radius:6px;transition:color .3s;background:transparent;}
+    nav a:hover{color:var(--accent);background:rgba(99,102,241,0.1);}
+    .cta{padding:10px 24px;background:var(--accent);color:var(--white);border-radius:6px;font-weight:600;text-decoration:none;transition:background .3s,transform .2s;}
+    .cta:hover{background:#4f46e5;transform:translateY(-2px);}
+    .hero{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;padding:160px 40px 100px;margin-top:72px;background:var(--white);border-bottom:1px solid #e5e7eb;}
+    .hero-text{max-width:540px;animation:fadeInUp .8s ease-out;}
+    .hero-text h1{font-size:3rem;color:var(--dark-blue);margin-bottom:20px;line-height:1.2;}
+    .hero-text p{font-size:1.125rem;margin-bottom:30px;}
+    .hero-text .btn{padding:14px 32px;background:var(--blue);color:var(--white);border:none;border-radius:6px;font-weight:600;cursor:pointer;text-decoration:none;transition:background .3s;}
+    .hero-text .btn:hover{background:var(--dark-blue);}
+    .hero-img{flex-shrink:0;margin-left:60px;animation:fadeIn .8s ease-out;}
+    .hero-img img{max-width:500px;width:100%;border-radius:12px;box-shadow:0 10px 30px var(--shadow);}
+    section{padding:80px 40px;}
+    .features{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:40px;margin-top:40px;}
+    .feature{background:var(--white);padding:30px;border-radius:8px;box-shadow:0 4px 20px var(--shadow);text-align:center;opacity:0;transform:translateY(40px);transition:opacity .8s ease-out,transform .8s ease-out;}
+    .feature.visible{opacity:1;transform:translateY(0);}
+    .feature h3{font-size:1.25rem;color:var(--dark-blue);margin-bottom:15px;}
+    .feature p{font-size:1rem;}
+    footer{background:var(--dark-blue);color:var(--white);text-align:center;padding:20px;}
+    @keyframes fadeInUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+    @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+    @media(max-width:768px){.hero{flex-direction:column;text-align:center;}.hero-img{margin:40px 0 0;}nav{flex-wrap:wrap;gap:10px;}}
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">DecorSoft2000</div>
+    <nav>
+      <a href="#features">Caracteristici</a>
+      <a href="#about">Despre noi</a>
+      <a href="{% url 'signup' %}" class="cta">Înregistrează-te</a>
+      <a href="{% url 'login_firma' %}" class="cta">Autentificare</a>
+    </nav>
+  </header>
+
+  <div class="hero">
+    <div class="hero-text">
+      <h1>Contabilitate digitală pentru afacerea ta</h1>
+      <p>Monitorizează bilanțul, tranzacțiile și gestiunile într-o singură platformă sigură și intuitivă.</p>
+      <a href="{% url 'signup' %}" class="btn">Începe acum</a>
+    </div>
+    <div class="hero-img">
+      <img src="https://images.unsplash.com/photo-1581093588401-31a89718942b?auto=format&fit=crop&w=800&q=80" alt="Dashboard contabilitate">
+    </div>
+  </div>
+
+  <section id="features">
+    <h2 style="text-align:center;color:var(--dark-blue);margin-bottom:40px;">Caracteristici cheie</h2>
+    <div class="features">
+      <div class="feature"><h3>Bilanț automat</h3><p>Obține bilanțuri actualizate instant.</p></div>
+      <div class="feature"><h3>Gestiuni multiple</h3><p>Gestionează stocurile și conturile mai multor entități.</p></div>
+      <div class="feature"><h3>Raportare în timp real</h3><p>Rapoarte grafice și exporturi PDF/Excel.</p></div>
+      <div class="feature"><h3>Securitate de top</h3><p>Date criptate și backup automat.</p></div>
+    </div>
+  </section>
+
+  <section id="about" style="background:var(--white);padding:80px 40px;">
+    <h2 style="text-align:center;color:var(--dark-blue);margin-bottom:40px;">Despre noi</h2>
+    <p style="max-width:700px;margin:0 auto;font-size:1rem;line-height:1.6;color:var(--gray);">
+      La DecorSoft2000 ne dedicăm să oferim soluții contabile flexibile și scalabile pentru IMM-uri.
+      Cu o interfață modernă și suport dedicat, te ajutăm să economisești timp și să te concentrezi pe creșterea afacerii.
+    </p>
+  </section>
+
+  <footer>&copy; 2025 DecorSoft2000. Toate drepturile rezervate.</footer>
+
+  <script>
+    const features = document.querySelectorAll('.feature');
+    const observer = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.2 });
+    features.forEach(f => observer.observe(f));
+  </script>
+
+</body>
+</html>
+
+
+
+
+lista_operatiuni:<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport"content="width=device-width,initial-scale=1"/>
+  <title>Lista Operațiuni</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+</head>
+<body class="bg-light">
+  <div class="container py-5">
+    <h2>Lista operațiunilor</h2>
+    {% if operatiuni %}
+      <table class="table table-striped table-hover mt-3">
+        <thead><tr><th>Data</th><th>Cont Debit</th><th>Cont Credit</th><th>Suma</th><th>Descriere</th></tr></thead>
+        <tbody>
+          {% for op in operatiuni %}
+            <tr>
+              <td>{{ op.data|date:"d-m-Y" }}</td>
+              <td>{{ op.cont_debit.numar }} – {{ op.cont_debit.nume }}</td>
+              <td>{{ op.cont_credit.numar }} – {{ op.cont_credit.nume }}</td>
+              <td>{{ op.suma|floatformat:2 }}</td>
+              <td>{{ op.descriere }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p class="mt-3">Nu există operațiuni înregistrate.</p>
+    {% endif %}
+    <a href="{% url 'adauga_operatiune' %}" class="btn btn-primary mt-3">Adaugă operațiune nouă</a>
+  </div>
+</body>
+</html>
+
+
+
+login_admin.html:
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Autentificare Admin</title>
+  <style>
+    body{margin:0;font-family:sans-serif;height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(to right,#434343,#000);}
+    .login-box{background:#1f1f1f;padding:40px;border-radius:10px;box-shadow:0 8px 30px rgba(0,0,0,0.7);width:100%;max-width:400px;text-align:center;color:#fff;}
+    .login-box h2{margin-bottom:20px;font-size:1.5rem;}
+    .login-box input{width:100%;padding:12px;margin:10px 0;border:none;border-radius:5px;}
+    .login-box button{width:100%;padding:12px;margin-top:10px;border:none;border-radius:5px;background:#6366f1;color:#fff;font-weight:bold;cursor:pointer;transition:background .3s;}
+    .login-box button:hover{background:#4f46e5;}
+    .error{color:#ff6b6b;font-weight:600;margin-top:15px;}
+  </style>
+</head>
+<body>
+  <div class="login-box">
+    <h2>Autentificare Admin</h2>
+    {% if error %}
+      <div class="error">{{ error }}</div>
+    {% endif %}
+    <form method="POST" action="{% url 'login_admin' %}">
+      {% csrf_token %}
+      <input type="text" name="username" placeholder="Utilizator Admin" required autofocus />
+      <input type="password" name="password" placeholder="Parolă Admin" required />
+      <button type="submit">Autentificare</button>
+    </form>
+  </div>
+</body>
+</html>
+
+
+
+
+login_firma.html:
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Autentificare Firmă</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {--accent:#6366f1;--error:#ef4444;--light-gray:#f5f7fa;--shadow:rgba(0,0,0,0.1);}
+    *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;}
+    body{background:var(--light-gray);display:flex;justify-content:center;align-items:center;height:100vh;}
+    .login-box{background:#fff;padding:40px 30px;border-radius:12px;box-shadow:0 8px 30px var(--shadow);width:100%;max-width:380px;text-align:center;}
+    .login-box h2{font-size:1.75rem;color:#1e40af;margin-bottom:24px;font-weight:600;}
+    .login-box .error{background:var(--error);color:#fff;padding:10px;border-radius:6px;margin-bottom:16px;}
+    .login-box input{width:100%;padding:12px;margin:8px 0;border:1px solid #ccc;border-radius:6px;}
+    .login-box button{width:100%;padding:12px;background:var(--accent);color:#fff;border:none;border-radius:6px;font-weight:600;cursor:pointer;transition:background .3s;}
+    .login-box button:hover{background:#4f46e5;}
+  </style>
+</head>
+<body>
+  <div class="login-box">
+    <h2>Autentificare Firmă</h2>
+    {% if error %}
+      <div class="error">{{ error }}</div>
+    {% endif %}
+    <form method="POST" action="{% url 'login_firma' %}">
+      {% csrf_token %}
+      <input type="text" name="username" placeholder="Utilizator" required autofocus />
+      <input type="password" name="password" placeholder="Parolă" required />
+      <button type="submit">Autentificare</button>
+    </form>
+  </div>
+</body>
+</html>
+
+
+
+profil_firma.html:
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport"content="width=device-width,initial-scale=1"/>
+  <title>Profil Firmă</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+</head>
+<body class="bg-light">
+  <div class="container py-5">
+    <h2>Profil Firmă</h2>
+    <form method="POST" class="mt-4">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn btn-primary">Salvează</button>
+      <a href="{% url 'dashboard_firma' %}" class="btn btn-secondary ms-2">Înapoi la Dashboard</a>
+    </form>
+  </div>
+</body>
+</html>
+
+
+signup.html:
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Înregistrare Firmă</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {--accent:#6366f1;--error:#ef4444;--light-gray:#f5f7fa;--shadow:rgba(0,0,0,0.1);}
+    *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;}
+    body{background:var(--light-gray);display:flex;justify-content:center;align-items:center;height:100vh;}
+    .signup-box{background:#fff;padding:40px;border-radius:10px;box-shadow:0 8px 30px var(--shadow);width:100%;max-width:400px;}
+    .signup-box h2{text-align:center;color:var(--accent);margin-bottom:24px;font-size:1.75rem;font-weight:600;}
+    .signup-box .errorlist{list-style:none;margin-bottom:16px;}
+    .signup-box .errorlist li{color:var(--error);margin-bottom:4px;}
+    .signup-box input{width:100%;padding:12px;margin:8px 0;border:1px solid #ccc;border-radius:6px;}
+    .signup-box button{width:100%;padding:12px;background:var(--accent);color:#fff;border:none;border-radius:6px;font-weight:600;cursor:pointer;transition:background .3s;}
+    .signup-box button:hover{background:#4f46e5;}
+  </style>
+</head>
+<body>
+  <div class="signup-box">
+    <h2>Înregistrare Firmă</h2>
+    <form method="POST" novalidate>
+      {% csrf_token %}
+      {% if form.non_field_errors %}
+        <ul class="errorlist">
+          {% for err in form.non_field_errors %}<li>{{ err }}</li>{% endfor %}
+        </ul>
+      {% endif %}
+      {{ form.username.errors }}{{ form.username }}  
+      {{ form.email.errors }}{{ form.email }}  
+      {{ form.nume.errors }}{{ form.nume }}  
+      {{ form.password.errors }}{{ form.password }}  
+      <button type="submit">Înregistrează</button>
+    </form>
+  </div>
+</body>
+</html>
+
+
+
+admin.py:
+from django.contrib import admin
+from .models import Firma
+
+@admin.register(Firma)
+class FirmaAdmin(admin.ModelAdmin):
+    list_display = ('id', 'nume', 'user')
+
+
+apps.py:
+from django.apps import AppConfig
+
+
+class AppConfig(AppConfig):
+    default_auto_field = 'django.db.models.BigAutoField'
+    name = 'app'
+
+
+forms.py:
+from django import forms
+from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
+from .models import Firma, Operatiune, Cont
+
+class FirmaForm(forms.ModelForm):
+    class Meta:
+        model = Firma
+        fields = ['nume']
+
+class SignUpForm(forms.Form):
+    username = forms.CharField(
+        max_length=150, required=True, label="Utilizator",
+        widget=forms.TextInput(attrs={'placeholder': 'Utilizator'})
+    )
+    password = forms.CharField(
+        required=True, label="Parolă",
+        widget=forms.PasswordInput(attrs={'placeholder': 'Parolă'})
+    )
+    email = forms.EmailField(
+        required=True, label="Email",
+        widget=forms.EmailInput(attrs={'placeholder': 'Email'})
+    )
+    nume = forms.CharField(
+        required=True, label="Nume firmă",
+        widget=forms.TextInput(attrs={'placeholder': 'Nume firmă'})
+    )
+
+    def clean_username(self):
+        u = self.cleaned_data['username']
+        if User.objects.filter(username=u).exists():
+            raise ValidationError(
+                "Acest username există deja. Poți alege altul sau te poți autentifica."
+            )
+        return u
+
+    def clean_email(self):
+        e = self.cleaned_data['email']
+        if User.objects.filter(email=e).exists():
+            raise ValidationError(
+                "Acest email este deja folosit. Poți să-ți recuperezi parola sau să folosești altul."
+            )
+        return e
+
+    def clean_nume(self):
+        n = self.cleaned_data['nume']
+        if Firma.objects.filter(nume__iexact=n).exists():
+            raise ValidationError("O firmă cu acest nume există deja.")
+        return n
+
+    def save(self):
+        user = User.objects.create_user(
+            username=self.cleaned_data['username'],
+            password=self.cleaned_data['password'],
+            email=self.cleaned_data['email']
+        )
+        Firma.objects.create(user=user, nume=self.cleaned_data['nume'])
+        return user
+
+class OperatiuneForm(forms.ModelForm):
+    cont_debit = forms.ModelChoiceField(
+        queryset=Cont.objects.all().order_by('numar'),
+        label="Cont Debit"
+    )
+    cont_credit = forms.ModelChoiceField(
+        queryset=Cont.objects.all().order_by('numar'),
+        label="Cont Credit"
+    )
+
+    class Meta:
+        model = Operatiune
+        fields = ['data', 'descriere', 'cont_debit', 'cont_credit', 'suma']
+        widgets = {
+            'data': forms.DateInput(attrs={'type': 'date'}),
+            'descriere': forms.Textarea(attrs={'rows': 2, 'placeholder': 'Descrierea operațiunii'}),
+            'suma': forms.NumberInput(attrs={'placeholder': 'Ex: 1000.00'}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # etichete bazate pe campurile modelului actualizat
+        self.fields['cont_debit'].label_from_instance = lambda obj: f"{obj.numar} – {obj.nume}"
+        self.fields['cont_credit'].label_from_instance = lambda obj: f"{obj.numar} – {obj.nume}"
+
+
+
+
+
+
+models.py:
+from django.db import models
+from django.contrib.auth.models import User
+
+class Firma(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    nume = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.nume
+
+class Cont(models.Model):
+    numar = models.CharField(max_length=20, unique=True)
+    nume = models.CharField(max_length=255)  # redenumit din `denumire`
+
+    def __str__(self):
+        return f"{self.numar} - {self.nume}"
+
+class Operatiune(models.Model):
+    firma = models.ForeignKey(Firma, on_delete=models.CASCADE)
+    data = models.DateField()
+    descriere = models.TextField()
+    cont_debit = models.ForeignKey(
+        Cont, related_name='operatiuni_debit', on_delete=models.CASCADE
+    )
+    cont_credit = models.ForeignKey(
+        Cont, related_name='operatiuni_credit', on_delete=models.CASCADE
+    )
+    suma = models.DecimalField(max_digits=10, decimal_places=2)
+
+    def __str__(self):
+        return f"{self.data} – {self.descriere}"
+
+
+
+
+
+
+
+
+urls.py:
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('', views.index, name='index'),
+    
+    # Autentificare & Înregistrare
+    path('signup/', views.signup_view, name='signup'),
+    path('login-firma/', views.login_view, name='login_firma'),
+    path('logout/', views.logout_view, name='logout'),
+
+    # Dashboards
+    path('dashboard-firma/', views.dashboard_firma, name='dashboard_firma'),
+    path('dashboard-superuser/', views.dashboard_superuser, name='dashboard_superuser'),
+
+    # Operațiuni contabile
+    path('adauga-operatiune/', views.adauga_operatiune, name='adauga_operatiune'),
+    path('operatiuni/', views.lista_operatiuni, name='lista_operatiuni'),
+]
+
+
+
+
+views.py:
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login, logout
+from django.core.exceptions import ObjectDoesNotExist
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.contrib import messages
+
+from .forms import FirmaForm, SignUpForm, OperatiuneForm
+from .models import Operatiune, Cont, Firma
+
+# … restul view-urilor rămâne neschimbat …
+
+
+
+def index(request):
+    return render(request, 'app/index.html')
+
+
+def signup_view(request):
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Contul a fost creat cu succes! Te poți autentifica.")
+            return redirect('login_firma')
+    else:
+        form = SignUpForm()
+    return render(request, 'app/signup.html', {'form': form})
+
+
+def login_view(request):
+    error = ''
+    if request.method == 'POST':
+        user = authenticate(
+            request,
+            username=request.POST['username'],
+            password=request.POST['password']
+        )
+        if user:
+            login(request, user)
+            if user.is_superuser:
+                return redirect('dashboard_superuser')
+            try:
+                _ = user.firma
+                return redirect('dashboard_firma')
+            except ObjectDoesNotExist:
+                error = 'Nu ai un rol asociat.'
+        else:
+            error = 'Utilizator sau parolă incorecte.'
+    return render(request, 'app/login_firma.html', {'error': error})
+
+
+@login_required
+def dashboard_firma(request):
+    if not hasattr(request.user, 'firma'):
+        return redirect('login_firma')
+    return render(request, 'app/dashboard_firma.html', {'firma': request.user.firma})
+
+
+@login_required
+def dashboard_superuser(request):
+    if not request.user.is_superuser:
+        return redirect('dashboard_firma')
+    users = User.objects.all()
+    return render(request, 'app/dashboard_superuser.html', {'users': users})
+
+
+def logout_view(request):
+    logout(request)
+    return redirect('login_firma')
+
+
+# -----------------------------
+# Operațiuni contabile
+# -----------------------------
+
+@login_required
+def adauga_operatiune(request):
+    firma = request.user.firma
+    if request.method == 'POST':
+        form = OperatiuneForm(request.POST)
+        if form.is_valid():
+            operatiune = form.save(commit=False)
+            operatiune.firma = firma
+            operatiune.save()
+            messages.success(request, "Operațiunea a fost adăugată.")
+            return redirect('lista_operatiuni')
+    else:
+        form = OperatiuneForm()
+    return render(request, 'app/adauga_operatiune.html', {'form': form})
+
+
+@login_required
+def lista_operatiuni(request):
+    operatiuni = Operatiune.objects.filter(firma=request.user.firma).order_by('-data')
+    return render(request, 'app/lista_operatiuni.html', {'operatiuni': operatiuni})
+
+
+
+
+urls.py:
+from django.contrib import admin
+from django.urls import path, include
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', include('app.urls')),
+]

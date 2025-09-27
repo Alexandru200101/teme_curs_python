@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Adaugă Operațiune</title>
+  <style>
+    body{font-family:sans-serif;padding:2rem;background:#f5f7fa;}
+    .container{max-width:600px;margin:0 auto;background:#fff;padding:2rem;border-radius:8px;box-shadow:0 3px 6px rgba(0,0,0,0.1);}
+    label{font-weight:600;margin-top:1rem;display:block;}
+    input,textarea,select{width:100%;padding:0.5rem;margin-top:0.3rem;border:1px solid #ccc;border-radius:6px;}
+    button{margin-top:1.5rem;padding:0.7rem 1.5rem;background:#2563eb;color:#fff;border:none;border-radius:6px;cursor:pointer;}
+    button:hover{background:#1e40af;}
+    .errorlist{color:#dc2626;list-style:none;padding:0;}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Adaugă operațiune</h2>
+    <form method="post" novalidate>
+      {% csrf_token %}
+      {{ form.non_field_errors }}
+      <label for="{{ form.data.id_for_label }}">Data:</label>
+      {{ form.data }}{{ form.data.errors }}
+      <label for="{{ form.cont_debit.id_for_label }}">Cont Debit:</label>
+      {{ form.cont_debit }}{{ form.cont_debit.errors }}
+      <label for="{{ form.cont_credit.id_for_label }}">Cont Credit:</label>
+      {{ form.cont_credit }}{{ form.cont_credit.errors }}
+      <label for="{{ form.suma.id_for_label }}">Suma:</label>
+      {{ form.suma }}{{ form.suma.errors }}
+      <label for="{{ form.descriere.id_for_label }}">Descriere:</label>
+      {{ form.descriere }}{{ form.descriere.errors }}
+      <button type="submit">Salvează</button>
+    </form>
+  </div>
+</body>
+</html>
+
+
+
+
