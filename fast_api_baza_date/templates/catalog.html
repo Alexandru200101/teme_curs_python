@@ -680,7 +680,7 @@
                 <p class="search-description">Descoperă cărțile din colecția noastră. Caută după titlu, autor sau gen.</p>
                 
                 <form method="get" class="search-box">
-                    <input type="text" name="search" placeholder="Caută o carte, autor sau gen...">
+                    <input type="text" name="search" placeholder="Caută o carte, autor sau gen..." value="{{ request.query_params.get('search', '') }}">
                     <button type="submit">
                         <i class="fas fa-search"></i>
                         Caută
@@ -688,12 +688,12 @@
                 </form>
                 
                 <div class="filter-options">
-                    <a href="?gen=all" class="filter-btn active">Toate</a>
-                    <a href="?gen=SF" class="filter-btn">SF</a>
-                    <a href="?gen=Fantasy" class="filter-btn">Fantasy</a>
-                    <a href="?gen=Romantic" class="filter-btn">Romantic</a>
-                    <a href="?gen=Aventură" class="filter-btn">Aventură</a>
-                    <a href="?gen=Dramă" class="filter-btn">Dramă</a>
+                    <a href="/catalog?gen=all" class="filter-btn {% if not gen_selectat or gen_selectat == 'all' %}active{% endif %}">Toate</a>
+                    <a href="/catalog?gen=SF" class="filter-btn {% if gen_selectat == 'SF' %}active{% endif %}">SF</a>
+                    <a href="/catalog?gen=Fantasy" class="filter-btn {% if gen_selectat == 'Fantasy' %}active{% endif %}">Fantasy</a>
+                    <a href="/catalog?gen=Romantic" class="filter-btn {% if gen_selectat == 'Romantic' %}active{% endif %}">Romantic</a>
+                    <a href="/catalog?gen=Aventură" class="filter-btn {% if gen_selectat == 'Aventură' %}active{% endif %}">Aventură</a>
+                    <a href="/catalog?gen=Dramă" class="filter-btn {% if gen_selectat == 'Dramă' %}active{% endif %}">Dramă</a>
                 </div>
             </div>
         </div>
@@ -711,15 +711,10 @@
             
             <!-- Messages -->
             {% if request.query_params.get('success') %}
-            <div class="success-message">
-                {{ request.query_params.get('success') }}
-            </div>
+            <div class="success-message">{{ request.query_params.get('success') }}</div>
             {% endif %}
-            
             {% if request.query_params.get('error') %}
-            <div class="error-message">
-                {{ request.query_params.get('error') }}
-            </div>
+            <div class="error-message">{{ request.query_params.get('error') }}</div>
             {% endif %}
             
             <!-- Login Prompt -->
@@ -743,18 +738,15 @@
                         {% if carte.an_publicare %}
                         <div class="book-badge">{{ carte.an_publicare }}</div>
                         {% endif %}
-                        
-                        <!-- Status carte -->
+
                         {% if carte.este_imprumutata %}
-                        <div class="book-status status-imprumutat">
-                            <i class="fas fa-clock"></i>
-                            Împrumutată
-                        </div>
+                            <div class="book-status status-imprumutat">
+                                <i class="fas fa-clock"></i> Împrumutată
+                            </div>
                         {% else %}
-                        <div class="book-status status-disponibil">
-                            <i class="fas fa-check"></i>
-                            Disponibilă
-                        </div>
+                            <div class="book-status status-disponibil">
+                                <i class="fas fa-check"></i> Disponibilă
+                            </div>
                         {% endif %}
                     </div>
                     <div class="book-info">
@@ -768,28 +760,31 @@
                                 <i class="fas fa-info-circle"></i>
                                 Detalii
                             </button>
-                            
+
                             {% if carte.este_imprumutata %}
-                                <!-- Buton Returnare -->
-                                <form action="/returnare/{{ carte.imprumut_id }}" method="post" style="display: inline;">
+                                {% if user and carte.imprumut_id %}
+                                <!-- Returnare doar dacă utilizatorul a împrumutat cartea -->
+                                <form action="/returnare/{{ carte.imprumut_id }}" method="post" style="display:inline;">
                                     <button type="submit" class="btn-returnare">
-                                        <i class="fas fa-undo"></i>
-                                        Returnează
+                                        <i class="fas fa-undo"></i> Returnează
                                     </button>
                                 </form>
+                                {% else %}
+                                <button class="btn-returnare" disabled>
+                                    <i class="fas fa-undo"></i> Returnează
+                                </button>
+                                {% endif %}
                             {% else %}
-                                <!-- Buton Împrumută -->
                                 {% if user %}
-                                <form action="/imprumuta/{{ carte.id }}" method="post" style="display: inline;">
+                                <!-- Buton Împrumută -->
+                                <form action="/imprumuta/{{ carte.id }}" method="post" style="display:inline;">
                                     <button type="submit" class="btn-imprumuta">
-                                        <i class="fas fa-book"></i>
-                                        Împrumută
+                                        <i class="fas fa-book"></i> Împrumută
                                     </button>
                                 </form>
                                 {% else %}
                                 <button class="btn-imprumuta" disabled>
-                                    <i class="fas fa-book"></i>
-                                    Autentifică-te
+                                    <i class="fas fa-book"></i> Autentifică-te
                                 </button>
                                 {% endif %}
                             {% endif %}
