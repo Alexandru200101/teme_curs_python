@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biblioteca Modernă</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #1a252f;
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: var(--light);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            padding: 20px 0;
+            position: relative;
+            z-index: 100;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--light);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .logo i {
+            color: var(--secondary);
+            font-size: 28px;
+            animation: pulse 2s infinite;
+        }
+
+        .logo:hover {
+            transform: translateY(-2px);
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 10px 25px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .btn-login {
+            background: transparent;
+            color: var(--light);
+            border: 2px solid var(--light);
+        }
+
+        .btn-login:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-signup {
+            background: var(--secondary);
+            color: white;
+            border: 2px solid var(--secondary);
+        }
+
+        .btn-signup:hover {
+            background: #2980b9;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+        }
+
+        .btn-admin {
+            background: var(--accent);
+            color: white;
+            border: 2px solid var(--accent);
+        }
+
+        .btn-admin:hover {
+            background: #c0392b;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
+        }
+
+        .btn-logout {
+            background: transparent;
+            color: var(--light);
+            border: 2px solid var(--light);
+        }
+
+        .btn-logout:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-3px);
+        }
+
+        .user-welcome {
+            color: var(--light);
+            font-weight: 500;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 80px 0;
+            display: flex;
+            align-items: center;
+            min-height: 80vh;
+        }
+
+        .hero-content {
+            max-width: 600px;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            background: linear-gradient(to right, var(--light), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .btn-explore {
+            background: var(--accent);
+            color: white;
+            padding: 12px 30px;
+            font-size: 18px;
+            border-radius: 30px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+
+        .btn-explore:hover {
+            background: #c0392b;
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 10px 20px rgba(231, 76, 60, 0.3);
+        }
+
+        .hero-image {
+            flex: 1;
+            display: flex;
+            justify-content: flex-end;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .book-stack {
+            position: relative;
+            width: 400px;
+            height: 400px;
+        }
+
+        .book {
+            position: absolute;
+            width: 200px;
+            height: 280px;
+            background: white;
+            border-radius: 5px 10px 10px 5px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transform-origin: left center;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 20px;
+            color: var(--dark);
+        }
+
+        .book-1 {
+            top: 0;
+            left: 0;
+            background: linear-gradient(45deg, #ff9a9e, #fad0c4);
+            transform: rotate(-5deg);
+            z-index: 3;
+            animation: bookTilt 8s ease-in-out infinite;
+        }
+
+        .book-2 {
+            top: 20px;
+            left: 30px;
+            background: linear-gradient(45deg, #a1c4fd, #c2e9fb);
+            transform: rotate(-2deg);
+            z-index: 2;
+            animation: bookTilt 7s ease-in-out infinite 1s;
+        }
+
+        .book-3 {
+            top: 40px;
+            left: 60px;
+            background: linear-gradient(45deg, #84fab0, #8fd3f4);
+            transform: rotate(1deg);
+            z-index: 1;
+            animation: bookTilt 9s ease-in-out infinite 0.5s;
+        }
+
+        .book-title {
+            font-weight: 700;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .book-author {
+            font-size: 14px;
+            opacity: 0.7;
+        }
+
+        .book-pages {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .book-pages span {
+            width: 40px;
+            height: 5px;
+            background: rgba(0, 0, 0, 0.1);
+            margin-left: 5px;
+            border-radius: 2px;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 80px 0;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 30px 30px 0 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 60px;
+            position: relative;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: var(--secondary);
+            border-radius: 2px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            transition: var(--transition);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .feature-icon {
+            font-size: 40px;
+            margin-bottom: 20px;
+            color: var(--secondary);
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .feature-card p {
+            opacity: 0.8;
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        footer {
+            padding: 40px 0;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+
+        .footer-link {
+            color: var(--light);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-link:hover {
+            color: var(--secondary);
+        }
+
+        .copyright {
+            opacity: 0.7;
+            font-size: 14px;
+        }
+
+        /* Formulare Login/Signup */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: rgba(44, 62, 80, 0.95);
+            border-radius: 20px;
+            width: 90%;
+            max-width: 450px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: var(--light);
+            font-size: 24px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .close-btn:hover {
+            color: var(--accent);
+            transform: rotate(90deg);
+        }
+
+        .form-title {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 28px;
+            background: linear-gradient(to right, var(--light), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--light);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 10px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--light);
+            font-size: 16px;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--secondary);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+
+        .form-footer {
+            margin-top: 25px;
+            text-align: center;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 12px;
+            background: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-bottom: 15px;
+        }
+
+        .btn-submit:hover {
+            background: #2980b9;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+        }
+
+        .form-switch {
+            color: var(--light);
+            font-size: 14px;
+        }
+
+        .form-switch a {
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .form-switch a:hover {
+            color: var(--accent);
+            text-decoration: underline;
+        }
+
+        .error-message {
+            background: rgba(231, 76, 60, 0.1);
+            border: 1px solid rgba(231, 76, 60, 0.3);
+            color: #e74c3c;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        @keyframes bookTilt {
+            0% { transform: rotate(-5deg); }
+            50% { transform: rotate(0deg); }
+            100% { transform: rotate(-5deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                gap: 50px;
+            }
+
+            .hero-content {
+                max-width: 100%;
+            }
+
+            .hero-image {
+                justify-content: center;
+            }
+
+            .book-stack {
+                width: 300px;
+                height: 300px;
+            }
+
+            .book {
+                width: 150px;
+                height: 210px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .auth-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .btn {
+                padding: 8px 20px;
+                font-size: 14px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="/" class="logo">
+                    <i class="fas fa-book-open"></i>
+                    BiblioTech
+                </a>
+                <div class="auth-buttons">
+                    {% if user %}
+                        <span class="user-welcome">Bun venit, {{ user.nume }}</span>
+                        <a href="/admin" class="btn btn-admin">
+                            <i class="fas fa-cog"></i>
+                            Admin
+                        </a>
+                        <a href="/logout" class="btn btn-logout">
+                            <i class="fas fa-sign-out-alt"></i>
+                            Logout
+                        </a>
+                    {% else %}
+                        <button class="btn btn-login" onclick="openModal('loginModal')">
+                            <i class="fas fa-sign-in-alt"></i>
+                            Login
+                        </button>
+                        <button class="btn btn-signup" onclick="openModal('signupModal')">
+                            <i class="fas fa-user-plus"></i>
+                            Sign Up
+                        </button>
+                    {% endif %}
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1>Descoperă Lumea Cărților Digitale</h1>
+                    <p>Accesează o colecție vastă de cărți, articole și resurse educaționale de oriunde și oricând. Biblioteca noastră modernă îți aduce cunoașterea la un click distanță.</p>
+                    <a href="/catalog" class="btn-explore">
+                        <i class="fas fa-search"></i>
+                        Explorează Colecția
+                    </a>
+                </div>
+                <div class="hero-image">
+                    <div class="book-stack">
+                        <div class="book book-1">
+                            <div>
+                                <div class="book-title">Arta Programării</div>
+                                <div class="book-author">Donald Knuth</div>
+                            </div>
+                            <div class="book-pages">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+                        <div class="book book-2">
+                            <div>
+                                <div class="book-title">Designul Interfețelor</div>
+                                <div class="book-author">Jenifer Tidwell</div>
+                            </div>
+                            <div class="book-pages">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+                        <div class="book book-3">
+                            <div>
+                                <div class="book-title">Algoritmi Moderni</div>
+                                <div class="book-author">Robert Sedgewick</div>
+                            </div>
+                            <div class="book-pages">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="features">
+            <div class="container">
+                <h2 class="section-title">De ce să ne alegi?</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <h3>Colecție Extinsă</h3>
+                        <p>Peste 100.000 de titluri în domenii variate, de la literatură clasică la cele mai recente publicații științifice.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <h3>Accesibil Oricând</h3>
+                        <p>Accesează biblioteca de pe orice dispozitiv, de la calculator la smartphone, fără restricții.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <h3>Interfață Modernă</h3>
+                        <p>Navigare intuitivă și interfață plăcută care îți face experiența de lectură mai enjoyabilă.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal Login -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal('loginModal')">&times;</button>
+            <h2 class="form-title">Log In</h2>
+            {% if error %}
+            <div class="error-message">
+                {{ error }}
+            </div>
+            {% endif %}
+            <form action="/login" method="post">
+                <div class="form-group">
+                    <label for="loginEmail">Email</label>
+                    <input type="email" id="loginEmail" name="email" class="form-control" placeholder="Introdu adresa de email" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Parola</label>
+                    <input type="password" id="loginPassword" name="parola" class="form-control" placeholder="Introdu parola" required>
+                </div>
+                <div class="form-footer">
+                    <button type="submit" class="btn-submit">Autentifică-te</button>
+                    <p class="form-switch">Nu ai cont? <a href="#" onclick="switchModal('loginModal', 'signupModal')">Înregistrează-te</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Signup -->
+    <div class="modal" id="signupModal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal('signupModal')">&times;</button>
+            <h2 class="form-title">Sign Up</h2>
+            {% if error %}
+            <div class="error-message">
+                {{ error }}
+            </div>
+            {% endif %}
+            <form action="/register" method="post">
+                <div class="form-group">
+                    <label for="signupName">Nume complet</label>
+                    <input type="text" id="signupName" name="nume" class="form-control" placeholder="Introdu numele complet" required>
+                </div>
+                <div class="form-group">
+                    <label for="signupEmail">Email</label>
+                    <input type="email" id="signupEmail" name="email" class="form-control" placeholder="Introdu adresa de email" required>
+                </div>
+                <div class="form-group">
+                    <label for="signupPassword">Parola</label>
+                    <input type="password" id="signupPassword" name="parola" class="form-control" placeholder="Creează o parolă" required>
+                </div>
+                <div class="form-group">
+                    <label for="signupConfirmPassword">Confirmă parola</label>
+                    <input type="password" id="signupConfirmPassword" name="confirm_parola" class="form-control" placeholder="Confirmă parola" required>
+                </div>
+                <div class="form-footer">
+                    <button type="submit" class="btn-submit">Înregistrează-te</button>
+                    <p class="form-switch">Ai deja cont? <a href="#" onclick="switchModal('signupModal', 'loginModal')">Autentifică-te</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="#" class="footer-link">Despre noi</a>
+                <a href="#" class="footer-link">Contact</a>
+                <a href="#" class="footer-link">Termeni și condiții</a>
+                <a href="#" class="footer-link">Politica de confidențialitate</a>
+            </div>
+            <div class="copyright">
+                &copy; 2023 BiblioTech. Toate drepturile rezervate.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        function switchModal(fromModalId, toModalId) {
+            closeModal(fromModalId);
+            openModal(toModalId);
+        }
+
+        // Închide modalul când se apasă în afara lui
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.classList.remove('active');
+            }
+        }
+    </script>
+</body>
+</html>

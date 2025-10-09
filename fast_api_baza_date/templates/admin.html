@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panou Admin - Biblioteca</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --success: #27ae60;
+            --warning: #f39c12;
+            --light: #ecf0f1;
+            --dark: #1a252f;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            background: #f8f9fa;
+            color: var(--dark);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .admin-header {
+            background: var(--primary);
+            color: white;
+            padding: 20px 0;
+            box-shadow: var(--shadow);
+        }
+
+        .admin-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .admin-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .admin-logo i {
+            color: var(--accent);
+        }
+
+        .admin-user {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            background: var(--secondary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .nav-link {
+            color: var(--light);
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: var(--transition);
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Tables */
+        .table-container {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            margin: 30px 0;
+        }
+
+        .table-title {
+            margin-bottom: 20px;
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        th {
+            background: var(--light);
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background: #f8f9fa;
+        }
+
+        .btn {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.9rem;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-return {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-return:hover {
+            background: #219a52;
+        }
+
+        .btn-logout {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-logout:hover {
+            background: #c0392b;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .admin-nav {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="admin-header">
+        <div class="container">
+            <div class="admin-nav">
+                <div class="admin-logo">
+                    <i class="fas fa-chart-line"></i>
+                    Panou Admin - Biblioteca
+                </div>
+                <div class="admin-user">
+                    <div class="user-avatar">{{ user.nume[0] }}</div>
+                    <span>{{ user.nume }}</span>
+                    <a href="/logout" class="btn btn-logout">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Logout
+                    </a>
+                </div>
+            </div>
+            <div class="nav-links">
+                <a href="/" class="nav-link">
+                    <i class="fas fa-home"></i>
+                    Acasă
+                </a>
+                <a href="/catalog" class="nav-link">
+                    <i class="fas fa-book"></i>
+                    Catalog
+                </a>
+                <a href="/admin" class="nav-link active">
+                    <i class="fas fa-chart-bar"></i>
+                    Statistici
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon" style="color: var(--secondary);">
+                    <i class="fas fa-book"></i>
+                </div>
+                <div class="stat-number">{{ total_carti }}</div>
+                <div class="stat-label">Total Cărți</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon" style="color: var(--success);">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="stat-number">{{ total_utilizatori }}</div>
+                <div class="stat-label">Utilizatori Înregistrați</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon" style="color: var(--primary);">
+                    <i class="fas fa-exchange-alt"></i>
+                </div>
+                <div class="stat-number">{{ total_imprumuturi }}</div>
+                <div class="stat-label">Total Împrumuturi</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon" style="color: var(--warning);">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <div class="stat-number">{{ imprumuturi_active }}</div>
+                <div class="stat-label">Împrumuturi Active</div>
+            </div>
+        </div>
+
+        <!-- Active Loans Table -->
+        <div class="table-container">
+            <h3 class="table-title">Împrumuturi Active</h3>
+            {% if imprumuturi_list %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Carte</th>
+                        <th>Utilizator</th>
+                        <th>Data Împrumut</th>
+                        <th>Acțiuni</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for imprumut in imprumuturi_list %}
+                    <tr>
+                        <td>{{ imprumut.carte_titlu }}</td>
+                        <td>{{ imprumut.utilizator_nume }}</td>
+                        <td>{{ imprumut.data_inceput.strftime('%d.%m.%Y %H:%M') }}</td>
+                        <td>
+                            <form action="/returnare/{{ imprumut.id }}" method="post" style="display: inline;">
+                                <button type="submit" class="btn btn-return">
+                                    <i class="fas fa-undo"></i>
+                                    Marchează Returnat
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <p style="text-align: center; color: #666; padding: 20px;">
+                <i class="fas fa-info-circle"></i>
+                Nu există împrumuturi active momentan.
+            </p>
+            {% endif %}
+        </div>
+    </main>
+</body>
+</html>
